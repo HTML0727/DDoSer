@@ -1,0 +1,18 @@
+# Build artifacts
+bin/
+*.o
+
+# Configuration files
+config/*.json
+
+# Log files
+logs/
+
+# IDE files
+.vscode/
+*.swp
+*.swo
+
+# OS generated files
+.DS_Store
+Thumbs.db
