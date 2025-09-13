@@ -4,8 +4,6 @@
 #include <ncurses.h>
 #include "attack.h"
 
-#define MAX_TARGETS 100
-
 // UI component structures
 typedef struct {
     char interface[32];

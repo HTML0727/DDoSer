@@ -4,7 +4,7 @@ This is a network penetration testing framework designed for security research a
 
 ## About Project Structure
 ```
-F:/DDoSer/
+DDoSer/
 ├── Makefile
 ├── README.md
 ├── ZH.README.md

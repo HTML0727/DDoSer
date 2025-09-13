@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -Wall -Wextra -std=c99 -O2
+CFLAGS = -Wall -Wextra -std=c99 -O2 -Iinclude -I/usr/include
 LIBS = -lncurses -lpthread -lcjson -lm
 
 # Directories
@@ -31,10 +31,10 @@ $(SRC_DIR)/%.o: $(SRC_DIR)/%.c
 clean:
 	rm -f $(OBJECTS) $(TARGET)
 
-# Install dependencies (Ubuntu/Debian)
+# Install dependencies (Arch Linux)
 install-deps:
-	sudo apt-get update
-	sudo apt-get install -y libncurses5-dev libcjson-dev
+	sudo pacman -Syu
+	sudo pacman -S ncurses cjson
 
 # Run the tool
 run: $(TARGET)

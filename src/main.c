@@ -3,9 +3,9 @@
 #include <string.h>
 #include <getopt.h>
 #include <locale.h>
+#include "attack.h"
 #include "network.h"
 #include "ui.h"
-#include "attack.h"
 
 // 全局配置结构
 typedef struct {

@@ -42,7 +42,7 @@ typedef struct {
 } AttackLog;
 
 // Target structure
-typedef struct {
+typedef struct Target {
     char ip[16];              // IP address
     int port;                 // Port
     AttackType attack_type;   // Attack type

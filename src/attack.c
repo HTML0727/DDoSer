@@ -286,7 +286,7 @@ void init_attack_modules(void) {
 }
 
 void start_attack(AttackType type, Target* target) {
-    if (type >= 0 && type < attack_count && attacks[type].handler) {
+    if (type >= 0 && type < MAX_ATTACK_TYPES && attacks[type].handler) {
         AttackContext ctx = {
             .target = target,
             .attack_type = type

@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <pthread.h>
+#include <unistd.h>
 #include "network.h"
 #include "attack.h"
 
@@ -9,10 +10,11 @@ static Target targets[MAX_TARGETS];
 static int target_count = 0;
 static pthread_mutex_t target_mutex = PTHREAD_MUTEX_INITIALIZER;
 
-void init_network(void) {
+int init_network(void) {
     pthread_mutex_init(&target_mutex, NULL);
     target_count = 0;
     printf("Network module initialized\n");
+    return 0;
 }
 
 void cleanup_network(void) {
@@ -44,8 +46,7 @@ int add_target(const char* ip, int port, AttackType type, int threads) {
     target_count++;
     pthread_mutex_unlock(&target_mutex);
     
-    printf("Target added: %s:%d (Attack: %s, Threads: %d)\n", 
-           ip, port, get_attack_name(type), threads);
+    printf("Target added: %s:%d (Attack: %s, Threads: %d)\n",  ip, port, get_attack_name(type), threads);
     return target_count - 1; // Return index of added target
 }
 
@@ -133,7 +134,7 @@ void* attack_worker(void* arg) {
         start_attack(target->attack_type, target);
         
         // Sleep for a short time to prevent excessive CPU usage
-        usleep(100000); // 100ms
+        sleep(100000); // 100ms
     }
     
     return NULL;
@@ -145,8 +146,8 @@ int validate_ip(const char* ip) {
     
     int a, b, c, d;
     return sscanf(ip, "%d.%d.%d.%d", &a, &b, &c, &d) == 4 &&
-           a >= 0 && a <= 255 && b >= 0 && b <= 255 &&
-           c >= 0 && c <= 255 && d >= 0 && d <= 255;
+        a >= 0 && a <= 255 && b >= 0 && b <= 255 &&
+        c >= 0 && c <= 255 && d >= 0 && d <= 255;
 }
 
 int validate_port(int port) {

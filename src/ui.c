@@ -5,8 +5,8 @@
 #include <locale.h>
 #include <unistd.h>
 #include <sys/stat.h>
+#include <cJSON.h>
 #include <dirent.h>
-#include <cjson/cjson.h>
 #include "ui.h"
 #include "network.h"
 #include "attack.h"
@@ -23,7 +23,7 @@ static NetworkInterface net_interface = {
 static TargetEntry targets[MAX_TARGETS];
 static int target_count = 0;
 static SystemStats stats = {0, 0, 0.0, 0.0};
-static int current_panel = 0; // 0: main, 1: config, 2: network, 3: stats
+// static int current_panel = 0; // 0: main, 1: config, 2: network, 3: stats 
 static int selected_target = 0;
 
 // Color pairs
@@ -240,8 +240,8 @@ void update_interface(void) {
         
         attron(COLOR_PAIR(color));
         mvprintw(10 + i, 2, "%-15s  %-4d  %-20s  %-7d  %s",
-                 t->ip, t->port, get_attack_type_str(t->attack_type),
-                 t->threads, t->running ? "Running" : "Stopped");
+                t->ip, t->port, get_attack_type_str(t->attack_type),
+                t->threads, t->running ? "Running" : "Stopped");
         attroff(COLOR_PAIR(color));
         
         // Highlight selected target
@@ -281,7 +281,8 @@ void save_config(void) {
         fclose(file);
     }
     
-    cJSON_free(json_string);
+    // 修改前: cJSON_free(json_string);
+    free(json_string);  // 修改为使用标准的 free 函数
     cJSON_Delete(root);
     
     // Show success message
